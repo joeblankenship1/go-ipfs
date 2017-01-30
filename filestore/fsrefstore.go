@@ -109,6 +109,15 @@ func (f *FileManager) Get(c *cid.Cid) (blocks.Block, error) {
 		return nil, err
 	}
 
+	outcid, err := c.Prefix().Sum(out)
+	if err != nil {
+		return nil, err
+	}
+
+	if !c.Equals(outcid) {
+		return nil, &CorruptReferenceError{fmt.Errorf("data in file did not match. %s offset %d", dobj.GetFilePath(), dobj.GetOffset())}
+	}
+
 	return blocks.NewBlockWithCid(out, c)
 }
 

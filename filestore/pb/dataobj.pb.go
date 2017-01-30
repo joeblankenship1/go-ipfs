@@ -13,7 +13,7 @@ It has these top-level messages:
 */
 package datastore_pb
 
-import proto "gx/ipfs/QmZ4Qi3GaRbjcx28Sme5eMH7RQjGkt8wHxt2a65oLaeFEV/gogo-protobuf/proto"
+import proto "github.com/gogo/protobuf/proto"
 import fmt "fmt"
 import math "math"
 
@@ -22,17 +22,23 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the proto package it is being compiled against.
+// A compilation error at this line likely means your copy of the
+// proto package needs to be updated.
+const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
+
 type DataObj struct {
-	FilePath         *string  `protobuf:"bytes,1,opt,name=FilePath" json:"FilePath,omitempty"`
-	Offset           *uint64  `protobuf:"varint,2,opt,name=Offset" json:"Offset,omitempty"`
-	Size_            *uint64  `protobuf:"varint,3,opt,name=Size" json:"Size,omitempty"`
-	Modtime          *float64 `protobuf:"fixed64,4,opt,name=Modtime" json:"Modtime,omitempty"`
-	XXX_unrecognized []byte   `json:"-"`
+	FilePath         *string `protobuf:"bytes,1,opt,name=FilePath" json:"FilePath,omitempty"`
+	Offset           *uint64 `protobuf:"varint,2,opt,name=Offset" json:"Offset,omitempty"`
+	Size_            *uint64 `protobuf:"varint,3,opt,name=Size" json:"Size,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *DataObj) Reset()         { *m = DataObj{} }
-func (m *DataObj) String() string { return proto.CompactTextString(m) }
-func (*DataObj) ProtoMessage()    {}
+func (m *DataObj) Reset()                    { *m = DataObj{} }
+func (m *DataObj) String() string            { return proto.CompactTextString(m) }
+func (*DataObj) ProtoMessage()               {}
+func (*DataObj) Descriptor() ([]byte, []int) { return fileDescriptorDataobj, []int{0} }
 
 func (m *DataObj) GetFilePath() string {
 	if m != nil && m.FilePath != nil {
@@ -55,13 +61,20 @@ func (m *DataObj) GetSize_() uint64 {
 	return 0
 }
 
-func (m *DataObj) GetModtime() float64 {
-	if m != nil && m.Modtime != nil {
-		return *m.Modtime
-	}
-	return 0
-}
-
 func init() {
 	proto.RegisterType((*DataObj)(nil), "datastore.pb.DataObj")
+}
+
+func init() { proto.RegisterFile("dataobj.proto", fileDescriptorDataobj) }
+
+var fileDescriptorDataobj = []byte{
+	// 115 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xe2, 0xe2, 0x4d, 0x49, 0x2c, 0x49,
+	0xcc, 0x4f, 0xca, 0xd2, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x01, 0x71, 0x8b, 0x4b, 0xf2,
+	0x8b, 0x52, 0xf5, 0x0a, 0x92, 0x94, 0x02, 0xb9, 0xd8, 0x5d, 0x12, 0x4b, 0x12, 0xfd, 0x93, 0xb2,
+	0x84, 0xa4, 0xb8, 0x38, 0xdc, 0x32, 0x73, 0x52, 0x03, 0x12, 0x4b, 0x32, 0x24, 0x18, 0x15, 0x18,
+	0x35, 0x38, 0x83, 0xe0, 0x7c, 0x21, 0x31, 0x2e, 0x36, 0xff, 0xb4, 0xb4, 0xe2, 0xd4, 0x12, 0x09,
+	0x26, 0x05, 0x46, 0x0d, 0x96, 0x20, 0x28, 0x4f, 0x48, 0x88, 0x8b, 0x25, 0x38, 0xb3, 0x2a, 0x55,
+	0x82, 0x19, 0x2c, 0x0a, 0x66, 0x03, 0x02, 0x00, 0x00, 0xff, 0xff, 0x4b, 0x4e, 0x18, 0x32, 0x70,
+	0x00, 0x00, 0x00,
 }
