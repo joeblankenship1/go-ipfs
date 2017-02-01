@@ -1,0 +1,21 @@
+FROM golang:1.7
+MAINTAINER Jakub Sztandera <kubuxu@ipfs.io>
+
+ENV GOPATH     /go
+ENV GOBIN      $GOPATH/bin
+ENV PATH       /go/bin:$PATH
+ENV SRC_PATH   /go/src/github.com/ipfs/go-ipfs
+
+WORKDIR $SRC_PATH
+
+COPY ./bin $SRC_PATH/bin/
+COPY ./mk $SRC_PATH/mk/
+RUN make -f bin/Rules.mk d=bin bin/gx bin/gx-go # install gx and gx-go
+
+COPY package.json $SRC_PATH/
+ENV PATH      $SRC_PATH/bin:$PATH
+RUN make -f mk/gx.mk gx-deps
+
+COPY . $SRC_PATH/
+
+CMD ["make", "build"]
