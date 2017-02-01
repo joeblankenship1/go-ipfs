@@ -2,7 +2,7 @@
 node {
 	def VERSION = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
 
-	def run = {String cmd -> 
+	def run = {String cmd ->
 		sh "docker run quay.io/ipfs/go-ipfs:$VERSION $cmd"
 	}
 
