@@ -10,9 +10,9 @@ node {
 		sh "docker build -t quay.io/ipfs/go-ipfs:$VERSION -f dockerfiles/Dockerfile.buildenv ."
 	}
 	stage("Build") {
-		sh "docker run -v "$CACHE_DIR:/go/pkg/" quay.io/ipfs/go-ipfs:$VERSION"
+		sh "docker run -v $CACHE_DIR:/go/pkg/ quay.io/ipfs/go-ipfs:$VERSION"
 	}
 	stage("Build2") {
-		sh "docker run -v "$CACHE_DIR:/go/pkg/" quay.io/ipfs/go-ipfs:$VERSION"
+		sh "docker run -v $CACHE_DIR:/go/pkg/ quay.io/ipfs/go-ipfs:$VERSION"
 	}
 }
