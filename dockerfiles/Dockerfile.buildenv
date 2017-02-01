@@ -18,4 +18,6 @@ RUN make -f mk/gx.mk gx-deps
 
 COPY . $SRC_PATH/
 
+RUN make -j 4 cmd/ipfs/ipfs test_sharness_deps
+
 CMD ["make", "build"]
