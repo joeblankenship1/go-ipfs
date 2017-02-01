@@ -1,7 +1,6 @@
 node {
 	def VERSION = "latest"
-	def CACHE_DIR = "/tmp/go-ipfs-build-cache"
-	sh(script: "mkdir -f $CACHE_DIR")
+	def CACHE_DIR = sh(returnStdout: true, script: "mktemp go-ipfs.cache.XXXXXXXX").trim()
 
 	stage("Checkout") {
 		git branch: 'feat/makefile/refactor', url: 'https://github.com/ipfs/go-ipfs.git'
@@ -11,6 +10,9 @@ node {
 		sh "docker build -t quay.io/ipfs/go-ipfs:$VERSION -f dockerfiles/Dockerfile.buildenv ."
 	}
 	stage("Build") {
+		sh "docker run -v "$CACHE_DIR:/go/pkg/" quay.io/ipfs/go-ipfs:$VERSION"
+	}
+	stage("Build2") {
 		sh "docker run -v "$CACHE_DIR:/go/pkg/" quay.io/ipfs/go-ipfs:$VERSION"
 	}
 }
