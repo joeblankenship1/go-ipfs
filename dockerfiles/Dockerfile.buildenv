@@ -10,14 +10,13 @@ WORKDIR $SRC_PATH
 
 COPY ./bin $SRC_PATH/bin/
 COPY ./mk $SRC_PATH/mk/
-RUN make -f bin/Rules.mk d=bin bin/gx bin/gx-go # install gx and gx-go
+RUN make -j 4 -f bin/Rules.mk d=bin bin/gx bin/gx-go # install gx and gx-go
 
 COPY package.json $SRC_PATH/
 ENV PATH      $SRC_PATH/bin:$PATH
 RUN make -f mk/gx.mk gx-deps
 
 COPY . $SRC_PATH/
-
 RUN make -j 4 cmd/ipfs/ipfs test_sharness_deps
 
 CMD ["make", "build"]
