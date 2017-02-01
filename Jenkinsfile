@@ -15,6 +15,4 @@ node {
 	stage("Build2") {
 		run "make build"
 	}
-
-	sh "rm $CACHE_DIR"
 }
