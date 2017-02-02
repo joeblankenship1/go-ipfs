@@ -1,6 +1,6 @@
 def VERSION = "latest"
 
-def run = {String cmd, Map env = null ->
+def run(String cmd, Map env = null) {
 	def defEnv = [TERM: 'xterm-color', TEST_NO_FUSE: '1', TEST_VERBOSE: '1'] as Map
 	if (env != null) {
 		for (e in env.entrySet()) {
@@ -22,32 +22,25 @@ stage("Build Container") {
 		sh "docker build -t quay.io/ipfs/go-ipfs:$VERSION -f dockerfiles/Dockerfile.buildenv ."
 	}
 }
+
 stage("Checks") {
-	parallel (
-		'go fmt': {
-			node {
-				run 'make test_go_fmt'
-			}
-		},
-		'go build': {
-			node {
-				run 'make cmd/ipfs/ipfs'
-			}
-		}
+	parallel(
+		'go fmt': { node {
+			run 'make test_go_fmt'
+		}},
+		'go build': { node {
+			run 'make cmd/ipfs/ipfs'
+		}}
 	)
 }
 
 stage("Tests") {
-	parallel (
-		'sharness': {
-			node {
-				run 'make test_sharness_expensive'
-			}
-		},
-		'go test': {
-			node {
+	parallel(
+		'sharness': { node {
+			run('make test_sharness_expensive', [color: 't'])
+		}},
+		'go test': { node {
 				run 'make test_go_expensive'
-			}
-		}
+		}}
 	)
 }
