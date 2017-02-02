@@ -25,10 +25,14 @@ stage("Build Container") {
 stage("Checks") {
 	parallel {
 		'go fmt': {
-			run 'make test_go_fmt'
+			node {
+				run 'make test_go_fmt'
+			}
 		},
 		'go build': {
-			run 'make cmd/ipfs/ipfs'
+			node {
+				run 'make cmd/ipfs/ipfs'
+			}
 		}
 	}
 }
@@ -36,10 +40,14 @@ stage("Checks") {
 stage("Tests") {
 	parallel {
 		'sharness': {
-			run 'make test_sharness_expensive'
+			node {
+				run 'make test_sharness_expensive'
+			}
 		},
 		'go test': {
-			run 'make test_go_expensive'
+			node {
+				run 'make test_go_expensive'
+			}
 		}
 	}
 }
