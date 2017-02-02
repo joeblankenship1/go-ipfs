@@ -34,7 +34,7 @@ COPY . $SRC_PATH/
 RUN chown -R user $GOPATH
 USER user
 
-RUN make -j 4 cmd/ipfs/ipfs test_sharness_deps
+RUN make -j 4 cmd/ipfs/ipfs
 
 
 CMD ["make", "build"]
