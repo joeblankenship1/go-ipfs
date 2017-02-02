@@ -25,10 +25,12 @@ stage("Build Container") {
 
 stage("Checks") {
 	parallel(
-		'go fmt': { node {
+		'go fmt': { node('linux') {
+			sh 'echo go fmt'
 			run 'make test_go_fmt'
 		}},
-		'go build': { node {
+		'go build': { node('linux') {
+			sh 'echo go build'
 			run 'make cmd/ipfs/ipfs'
 		}}
 	)
