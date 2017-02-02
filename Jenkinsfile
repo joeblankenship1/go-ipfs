@@ -1,19 +1,29 @@
-ansiColor('xterm') {
-	node {
-		def VERSION = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
+node {
+	def VERSION = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
 
-			def run = {String cmd ->
-				sh "docker run -e TERM -e color=t -e TEST_NO_FUSE=1 quay.io/ipfs/go-ipfs:$VERSION $cmd"
+	def run = {String cmd, Map env = null ->
+		def defEnv = [TERM: 'xterm', TEST_NO_FUSE: '1', TEST_VERBOSE: '1'] as Map
+		if (env != null) {
+			for (e in env.entrySet()) {
+				defEnv[e.getKey()] = e.getValue()
 			}
+		}
+		def envStr = ""
+		for (e in defEnv.entrySet()) {
+			envStr = envStr + "-e '${e.getKey()}=${e.getValue()}' "
+		}
+		sh "docker run $envStr quay.io/ipfs/go-ipfs:$VERSION $cmd"
+	}
 
-		stage("Prep") {
-			sh "docker build -t quay.io/ipfs/go-ipfs:$VERSION -f dockerfiles/Dockerfile.buildenv ."
-		}
-		stage("Build") {
-			run "make build"
-		}
-		stage("Test") {
-			run "make test"
+	stage("Prep") {
+		sh "docker build -t quay.io/ipfs/go-ipfs:$VERSION -f dockerfiles/Dockerfile.buildenv ."
+	}
+	stage("Build") {
+		run "make build"
+	}
+	stage("Test") {
+		ansiColor('xterm') {
+			run("make test", [color: 't'])
 		}
 	}
 }
