@@ -16,7 +16,7 @@ node {
 	}
 
 	stage("Prep") {
-		git branch: 'feat/makefile/refactor', url: 'https://github.com/ipfs/go-ipfs.git'
+		checkout scm
 		VERSION = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
 
 		sh "docker build -t quay.io/ipfs/go-ipfs:$VERSION -f dockerfiles/Dockerfile.buildenv ."

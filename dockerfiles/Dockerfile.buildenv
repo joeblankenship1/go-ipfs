@@ -1,12 +1,10 @@
 FROM golang:1.7
 MAINTAINER Jakub Sztandera <kubuxu@ipfs.io>
 
-ENV GOPATH     /go
 ENV GOBIN      $GOPATH/bin
-ENV PATH       /go/bin:$PATH
 ENV SRC_PATH   /go/src/github.com/ipfs/go-ipfs
 
-USER user
+RUN useradd user
 
 WORKDIR $SRC_PATH
 
@@ -20,5 +18,8 @@ RUN make -f mk/gx.mk gx-deps
 
 COPY . $SRC_PATH/
 RUN make -j 4 cmd/ipfs/ipfs test_sharness_deps
+
+RUN chown -R user $GOPATH
+USER user
 
 CMD ["make", "build"]
