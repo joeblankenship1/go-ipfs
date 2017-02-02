@@ -13,6 +13,7 @@ def run = {String cmd, Map env = null ->
 		}
 	sh "docker run $envStr quay.io/ipfs/go-ipfs:$VERSION $cmd"
 }
+ansiColor('xterm') {
 
 stage("Build Container") {
 	node("docker-master") {
@@ -47,4 +48,5 @@ stage("Tests") {
 			run 'make test_go_expensive'
 		}}
 	)
+}
 }
