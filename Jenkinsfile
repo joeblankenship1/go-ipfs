@@ -2,7 +2,7 @@ node {
 	def VERSION = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
 
 		def run = {String cmd ->
-			sh "docker run -e TEST_NO_FUSE=1 quay.io/ipfs/go-ipfs:$VERSION $cmd"
+			sh "docker run -e color=t -e TEST_NO_FUSE=1 quay.io/ipfs/go-ipfs:$VERSION $cmd"
 		}
 
 	stage("Prep") {
