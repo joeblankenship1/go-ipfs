@@ -19,7 +19,7 @@ ansiColor('xterm') {
 withEnv(["TERM=$terminal"]){
 
 stage("Build Container") {
-	node("docker-master") {
+	node {
 		checkout scm
 		VERSION = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
 
@@ -29,11 +29,11 @@ stage("Build Container") {
 
 stage("Checks") {
 	parallel(
-		'go fmt': { node('linux') {
+		'go fmt': { node {
 			sh 'echo go fmt'
 			run 'make test_go_fmt'
 		}},
-		'go build': { node('linux') {
+		'go build': { node {
 			sh 'echo go build'
 			run 'make cmd/ipfs/ipfs'
 		}}
