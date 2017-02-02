@@ -39,10 +39,12 @@ stage("Checks") {
 stage("Tests") {
 	parallel(
 		'sharness': { node {
+			sh 'echo make test_sharness_expensive'
 			run('make test_sharness_expensive', [color: 't'])
 		}},
 		'go test': { node {
-				run 'make test_go_expensive'
+			sh 'echo make test_go_expensive'
+			run 'make test_go_expensive'
 		}}
 	)
 }
