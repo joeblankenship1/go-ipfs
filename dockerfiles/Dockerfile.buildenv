@@ -3,7 +3,7 @@ MAINTAINER Jakub Sztandera <kubuxu@ipfs.io>
 
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-		netcat \
+		netcat-openbsd \
 		sudo \
 		&& rm -rf /var/lib/apt/lists/*
 
