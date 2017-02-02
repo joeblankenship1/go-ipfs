@@ -28,7 +28,7 @@ stage("Build") {
 	}
 }
 stage("Test") {
-	node {
+	node("linux") {
 		ansiColor('xterm') {
 			run("make test", [color: 't'])
 		}
