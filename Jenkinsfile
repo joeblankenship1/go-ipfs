@@ -1,7 +1,9 @@
 def VERSION = "latest"
 
+def terminal = 'xterm-color'
+
 def run = {String cmd, Map env = null ->
-	def defEnv = [TERM: 'xterm-color', TEST_NO_FUSE: '1', TEST_VERBOSE: '1'] as Map
+	def defEnv = [TERM: terminal, TEST_NO_FUSE: '1', TEST_VERBOSE: '1'] as Map
 	if (env != null) {
 		for (e in env.entrySet()) {
 			defEnv[e.getKey()] = e.getValue()
@@ -14,6 +16,7 @@ def run = {String cmd, Map env = null ->
 	sh "docker run $envStr quay.io/ipfs/go-ipfs:$VERSION $cmd"
 }
 ansiColor('xterm') {
+withEnv(["TERM=$terminal"]){
 
 stage("Build Container") {
 	node("docker-master") {
@@ -48,5 +51,4 @@ stage("Tests") {
 			run 'make test_go_expensive'
 		}}
 	)
-}
-}
+}}}
