@@ -6,6 +6,8 @@ ENV GOBIN      $GOPATH/bin
 ENV PATH       /go/bin:$PATH
 ENV SRC_PATH   /go/src/github.com/ipfs/go-ipfs
 
+USER user
+
 WORKDIR $SRC_PATH
 
 COPY ./bin $SRC_PATH/bin/
