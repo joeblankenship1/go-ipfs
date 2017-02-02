@@ -13,6 +13,15 @@ include mk/golang.mk
 include mk/gx.mk
 
 # -------------------- #
+#   extra properties   #
+# -------------------- #
+
+ifeq ($(TEST_NO_FUSE),1)
+	GOTAGS += nofuse
+endif
+export IPFS_REUSEPORT=false
+
+# -------------------- #
 #       sub-files      #
 # -------------------- #
 dir := bin
@@ -56,15 +65,6 @@ include $(dir)/Rules.mk
 
 %.pb.go: %.proto
 	$(PROTOC)
-
-# -------------------- #
-#   extra properties   #
-# -------------------- #
-
-ifeq ($(TEST_NO_FUSE),1)
-	GOTAGS += nofuse
-endif
-export IPFS_REUSEPORT=false
 
 # -------------------- #
 #     core targets     #
