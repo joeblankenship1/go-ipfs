@@ -23,7 +23,7 @@ stage("Build Container") {
 	}
 }
 stage("Checks") {
-	parallel {
+	parallel (
 		'go fmt': {
 			node {
 				run 'make test_go_fmt'
@@ -34,11 +34,11 @@ stage("Checks") {
 				run 'make cmd/ipfs/ipfs'
 			}
 		}
-	}
+	)
 }
 
 stage("Tests") {
-	parallel {
+	parallel (
 		'sharness': {
 			node {
 				run 'make test_sharness_expensive'
@@ -49,5 +49,5 @@ stage("Tests") {
 				run 'make test_go_expensive'
 			}
 		}
-	}
+	)
 }
