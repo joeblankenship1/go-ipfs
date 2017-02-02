@@ -2,7 +2,7 @@ node {
 	def VERSION = "latest"
 
 	def run = {String cmd, Map env = null ->
-		def defEnv = [TERM: 'xterm', TEST_NO_FUSE: '1', TEST_VERBOSE: '1'] as Map
+		def defEnv = [TERM: 'xterm-8bit', TEST_NO_FUSE: '1', TEST_VERBOSE: '1'] as Map
 		if (env != null) {
 			for (e in env.entrySet()) {
 				defEnv[e.getKey()] = e.getValue()
