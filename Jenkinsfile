@@ -32,11 +32,11 @@ stage("Checks") {
 	parallel(
 		'go fmt': { node {
 			sh 'echo go fmt'
-			run VERSION 'make test_go_fmt'
+			run VERSION, 'make test_go_fmt'
 		}},
 		'go build': { node {
 			sh 'echo go build'
-			run VERSION 'make cmd/ipfs/ipfs'
+			run VERSION, 'make cmd/ipfs/ipfs'
 		}}
 	)
 }
@@ -49,7 +49,7 @@ stage("Tests") {
 		}},
 		'go test': { node {
 			sh 'echo make test_go_expensive'
-			run VERSION 'make test_go_expensive'
+			run VERSION, 'make test_go_expensive'
 		}}
 	)
 }}}
